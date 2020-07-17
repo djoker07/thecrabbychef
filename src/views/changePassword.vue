@@ -64,7 +64,6 @@ export default {
           new: this.password,
           uid: JSON.parse(localStorage.getItem("user"))[1]
         };
-        console.log(pass);
         axios
           .post("/chng_pass", pass)
           .then(({ data }) => {
@@ -76,7 +75,6 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
             this.error = err;
           });
       }

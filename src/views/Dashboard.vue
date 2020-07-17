@@ -104,7 +104,6 @@ export default {
     },
     loadMore: function() {
       this.rowCount += 1;
-      console.log(this.rowCount);
     },
     filter: function() {
       this.filtered = [];
@@ -119,14 +118,12 @@ export default {
       }
     },
     searchFilter: function() {
-      // console.log("clicked ", this.$refs.recipe_name.value)
       this.filtered = [];
       let str = this.$refs.recipe_name.value.toLowerCase();
       // if (this.all_recipes) {
       for (let i = 0, l = this.all_recipes.length; i < l; i++) {
         let temp = this.all_recipes[i][1].toLowerCase();
         if (temp.includes(str)) {
-          // console.log(this.all_recipes[i])
           this.filtered.push(this.all_recipes[i]);
         }
       }
@@ -134,7 +131,6 @@ export default {
   },
   created() {
     let user = JSON.parse(localStorage.getItem("user"));
-    // console.log(user)
     // this.my_user.id = user[1]
 
     axios.get("/my_recipes", { params: { ID: user[1] } }).then(({ data }) => {

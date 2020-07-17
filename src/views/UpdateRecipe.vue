@@ -141,24 +141,21 @@ export default {
       // recipe_id: {},
       image_upload: "",
       og_filename: "",
-      error: null
+      error: null,
+      returned_data: ""
     };
   },
   methods: {
     updateRecipe: function() {
-      // console.log(this.recipe)
-
       if (this.og_filename === this.recipe.image) {
-        console.log("no new image");
         axios.post("/update_recipe", this.recipe).then(({ r_data }) => {
-          console.log("Success", r_data);
+          this.returned_data = r_data;
           this.$router.push({
             name: "dashboard",
             params: { msg: "Submitted for Approval" }
           });
         });
       } else {
-        console.log("new image added");
         const config = {
           headers: { "content-type": "multipart/form-data" }
         };
@@ -168,9 +165,8 @@ export default {
             if (data != "true") {
               this.error = data;
             } else {
-              console.log(this.recipe);
               axios.post("/update_recipe", this.recipe).then(({ r_data }) => {
-                console.log("Success", r_data);
+                this.returned_data = r_data;
                 this.$router.push({
                   name: "dashboard",
                   params: { msg: "Submitted for Approval" }
@@ -179,7 +175,6 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
             this.error = err;
           });
       }
@@ -187,27 +182,20 @@ export default {
     getImage: function(event) {
       var image = document.getElementById("imageLabel");
       image.innerHTML = event.target.files[0].name;
-      // console.log(event.target.files[0])
       let fd = new FormData();
-      // console.log(event.target.files[0], event.target.files[0].name)
       let filename = Date.now() + "_" + event.target.files[0].name;
       this.recipe.image = filename;
       fd.append("image", event.target.files[0], filename);
-      // console.log(fd)
       this.image_upload = fd;
-
-      // console.log(this.image_upload)
     }
   },
   created() {
     // this.recipe.author_id =
     let user = JSON.parse(localStorage.getItem("user"));
-    // console.log(user)
     this.recipe.author_id = user[1];
     this.recipe.author = user[2];
 
     let temp = this.$route.params.recipe;
-    // console.log(temp)
     this.recipe.title = temp[1];
     this.recipe.author = temp[2];
     this.recipe.type = temp[3];
@@ -221,12 +209,8 @@ export default {
 
     this.recipe.image = temp[6];
     this.og_filename = temp[6];
-    // var filename = document.getElementById("imageLabel");
-    // console.log(filename)
-    // filename.innerHTML = this.recipe.image;
 
     this.recipe.id = temp[0];
-    console.log(this.recipe);
   }
 };
 </script>

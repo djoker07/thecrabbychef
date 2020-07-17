@@ -61,7 +61,7 @@ export default {
           this.$router.push({ name: "view" });
         })
         .catch(err => {
-          console.log(err);
+          alert(err);
         });
     },
     updateRecipe: function(recipe) {

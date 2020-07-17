@@ -91,7 +91,6 @@ export default {
     },
     loadMore: function() {
       this.rowCount += 1;
-      console.log(this.rowCount);
     },
     filter: function() {
       this.filtered = [];

@@ -79,7 +79,6 @@ export default {
     },
     approveRecipe: function() {
       axios.post("/approve_recipes", this.recipe_id).then(({ data }) => {
-        // console.log(data)
         if (data == "true") {
           // this.$router.go()
           this.$router.go(-1);
@@ -93,7 +92,6 @@ export default {
         this.recipe_id.msg = "Denied because image is inappropiate";
       }
       axios.post("/deny_recipes", this.recipe_id).then(({ data }) => {
-        // console.log(data)
         if (data == "true") {
           // this.$router.go()
           this.$router.go(-1);
@@ -114,8 +112,6 @@ export default {
 
     let r = JSON.parse(localStorage.getItem("t_recipe"));
     r = r["recipe"];
-    // console.log(r);
-    console.log(r[1]);
 
     this.recipe.title = r[1];
     this.recipe.author = r[2];
@@ -129,8 +125,6 @@ export default {
 
     this.recipe_approved = r[7];
     this.recipe_id.id = r[0];
-
-    // console.log(this.recipe.author_id, this.uid, this.recipe.author_id == this.uid)
   },
   computed: {
     //   ...authComputed,

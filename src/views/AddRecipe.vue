@@ -135,7 +135,8 @@ export default {
         err_msg: "Submitted for Approval"
       },
       image_upload: "",
-      error: null
+      error: null,
+      returned_data: ""
     };
   },
   methods: {
@@ -150,9 +151,8 @@ export default {
           if (data != "true") {
             this.error = data;
           } else {
-            console.log(this.recipe);
             axios.post("/new_recipe", this.recipe).then(({ r_data }) => {
-              console.log("Success", r_data);
+              this.returned_data = r_data;
               this.$router.push({
                 name: "dashboard",
                 params: { msg: "Submitted for Approval" }
@@ -161,7 +161,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           this.error = err;
         });
     },
